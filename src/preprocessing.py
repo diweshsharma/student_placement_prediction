@@ -2,12 +2,12 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler , OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
-categorical ={
+categorical =[
     'branch',
     'college_tier'
-}
+]
 
-numerical ={
+numerical =[
     "cgpa",
     "backlogs",
     "coding_skills",
@@ -23,7 +23,7 @@ numerical ={
     "open_source_contributions",
     "extracurriculars"                
 
-}
+]
 
 def preprocess():
     return ColumnTransformer(
