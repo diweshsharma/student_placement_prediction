@@ -55,7 +55,8 @@ thresholds = {
     'certifications': 2,
     'hackathons': 1,
     'open_source_contributions': 1,
-    'extracurriculars': 2
+    'extracurriculars': 1
+    
 }
   
 data = pd.DataFrame([student])
@@ -73,7 +74,7 @@ for feature, threshold in thresholds.items():
     else:
         if student[feature] < threshold:
             weak_areas.append(feature)
-
+    
 print(f"Weak areas to improve: {weak_areas}")
   
     
