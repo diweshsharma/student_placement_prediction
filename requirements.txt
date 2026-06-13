@@ -1,10 +1,9 @@
-numpy
-pandas
+fastapi
+uvicorn
 scikit-learn
-matplotlib
-seaborn
-joblib
-streamlit
 xgboost
-shap
-plotly
+pandas
+numpy
+joblib
+groq
+python-dotenv
