@@ -4,8 +4,19 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel , Field
 from typing import Literal
+from groq import Groq
+from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 classifier = joblib.load(os.path.join(BASE_DIR, '..', 'models', 'classifier.pkl'))
@@ -67,3 +78,29 @@ def prediction(stud:predict):
                   
                     
         return {"status": "Not Placed", "weak_areas": weak_areas}
+    
+class WeakAreas(BaseModel):
+    weak_areas: list[str]
+
+
+@app.post('/suggestions')
+def get_suggestions(data: WeakAreas):
+    load_dotenv()
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{
+            "role": "user",
+            "content": f"""
+            A student is not getting placed in campus recruitment.
+            Their weak areas are: {', '.join(data.weak_areas)}
+            
+            Give specific, actionable suggestions to improve each weak area.
+            Keep it concise - 2 to 3 lines per weak area.
+            Format as bullet points.
+            """
+        }]
+    )
+    
+    return {"suggestions": response.choices[0].message.content}
