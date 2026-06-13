@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predictive Intelligence Suite</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="screen1" class="screen active">
+  <div class="mesh-bg"></div>
+  <div class="entry-content">
+    <div class="entry-badge">Cascaded ML Pipeline · v1.0</div>
+    <h1 class="hero-title">Predictive Intelligence<br><span class="hero-accent">Suite</span></h1>
+    <p class="hero-sub">Campus placement prediction powered by Random Forest & Linear Regression</p>
+    <div class="input-wrap">
+      <input type="text" id="nameInput" class="name-input" placeholder=" " autocomplete="off" />
+      <label class="float-label">Enter your name</label>
+      <div class="input-glow"></div>
+    </div>
+    <button id="launchBtn" class="launch-btn" disabled>
+      <span>Launch Workspace</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="screen2" class="screen">
+  <div id="toast" class="toast"></div>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">
+        <div class="logo-dot"></div>
+        <span>PlacementIQ</span>
+      </div>
+      <div class="api-status">
+        <span class="pulse-dot"></span>
+        <span>API Connected</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="welcomeText" class="welcome-text"></span>
+      <button class="logout-btn" onclick="logout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <div class="left-panel">
+      <div class="panel-header">
+        <h2>Feature Input</h2>
+        <p>Configure student profile parameters</p>
+      </div>
+
+      <div class="glass-card">
+        <div class="card-label">Academic Profile</div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Branch</label>
+            <div class="custom-select-wrap">
+              <select id="branch">
+                <option>CSE</option><option>ECE</option><option>EE</option>
+                <option>IT</option><option>ME</option><option>CE</option><option>Chemical</option>
+              </select>
+              <svg class="sel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>College Tier</label>
+            <div class="custom-select-wrap">
+              <select id="college_tier">
+                <option>Tier-1</option><option>Tier-2</option><option>Tier-3</option>
+              </select>
+              <svg class="sel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="slider-field">
+          <div class="slider-header"><span>CGPA</span><span class="slider-val" id="cgpa-val">7.0</span></div>
+          <input type="range" id="cgpa" min="0" max="10" step="0.1" value="7.0" oninput="updateSlider(this,'cgpa-val',1)">
+        </div>
+        <div class="slider-field">
+          <div class="slider-header"><span>Backlogs</span><span class="slider-val" id="backlogs-val">0</span></div>
+          <input type="range" id="backlogs" min="0" max="10" step="1" value="0" oninput="updateSlider(this,'backlogs-val',0)">
+        </div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>Internships</span><span class="slider-val" id="internships-val">0</span></div>
+            <input type="range" id="internships" min="0" max="5" step="1" value="0" oninput="updateSlider(this,'internships-val',0)">
+          </div>
+          <div class="slider-field half">
+            <div class="slider-header"><span>Projects</span><span class="slider-val" id="projects-val">3</span></div>
+            <input type="range" id="projects_count" min="0" max="20" step="1" value="3" oninput="updateSlider(this,'projects-val',0)">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>Certifications</span><span class="slider-val" id="certs-val">2</span></div>
+            <input type="range" id="certifications" min="0" max="20" step="1" value="2" oninput="updateSlider(this,'certs-val',0)">
+          </div>
+          <div class="slider-field half">
+            <div class="slider-header"><span>Hackathons</span><span class="slider-val" id="hack-val">1</span></div>
+            <input type="range" id="hackathons" min="0" max="20" step="1" value="1" oninput="updateSlider(this,'hack-val',0)">
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="card-label">Technical & Soft Skills</div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>Coding Skills</span><span class="slider-val" id="coding-val">5</span></div>
+            <input type="range" id="coding_skills" min="1" max="10" step="1" value="5" oninput="updateSlider(this,'coding-val',0)">
+          </div>
+          <div class="slider-field half">
+            <div class="slider-header"><span>DSA Score</span><span class="slider-val" id="dsa-val">5.0</span></div>
+            <input type="range" id="dsa_score" min="0" max="10" step="0.1" value="5.0" oninput="updateSlider(this,'dsa-val',1)">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>ML Knowledge</span><span class="slider-val" id="ml-val">5.0</span></div>
+            <input type="range" id="ml_knowledge" min="0" max="10" step="0.1" value="5.0" oninput="updateSlider(this,'ml-val',1)">
+          </div>
+          <div class="slider-field half">
+            <div class="slider-header"><span>System Design</span><span class="slider-val" id="sys-val">5.0</span></div>
+            <input type="range" id="system_design" min="0" max="10" step="0.1" value="5.0" oninput="updateSlider(this,'sys-val',1)">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>Communication</span><span class="slider-val" id="comm-val">5.0</span></div>
+            <input type="range" id="communication_skills" min="0" max="10" step="0.1" value="5.0" oninput="updateSlider(this,'comm-val',1)">
+          </div>
+          <div class="slider-field half">
+            <div class="slider-header"><span>Aptitude</span><span class="slider-val" id="apt-val">50</span></div>
+            <input type="range" id="aptitude_score" min="0" max="100" step="1" value="50" oninput="updateSlider(this,'apt-val',0)">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="slider-field half">
+            <div class="slider-header"><span>Open Source</span><span class="slider-val" id="oss-val">1</span></div>
+            <input type="range" id="open_source_contributions" min="0" max="20" step="1" value="1" oninput="updateSlider(this,'oss-val',0)">
+          </div>
+          <div class="field-group half">
+            <label>Extracurriculars</label>
+            <div class="custom-select-wrap">
+              <select id="extracurriculars">
+                <option value="0">None</option><option value="1">Low</option>
+                <option value="2" selected>Medium</option><option value="3">High</option>
+              </select>
+              <svg class="sel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button id="inferBtn" class="infer-btn" onclick="runInference()">
+        <span id="inferBtnText">Execute Inference</span>
+        <svg id="inferBtnIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </button>
+    </div>
+
+    <div class="right-panel">
+      <div class="panel-header">
+        <h2>Prediction Output</h2>
+        <p>Real-time inference results</p>
+      </div>
+
+      <div id="skeletonLoader" class="skeleton-loader" style="display:none">
+        <div class="skel-bar w80"></div>
+        <div class="skel-bar w60"></div>
+        <div class="skel-bar w90"></div>
+        <div class="skel-bar w70"></div>
+      </div>
+
+      <div id="resultArea" style="display:none">
+        <div id="placedResult" style="display:none">
+          <div class="kpi-grid">
+            <div class="kpi-card emerald">
+              <div class="kpi-label">Placement Status</div>
+              <div class="kpi-value" id="kpiStatus">Placed</div>
+            </div>
+            <div class="kpi-card blue">
+              <div class="kpi-label">Predicted Salary</div>
+              <div class="kpi-value" id="kpiSalary">—</div>
+            </div>
+            <div class="kpi-card purple">
+              <div class="kpi-label">Confidence</div>
+              <div class="kpi-value">High</div>
+            </div>
+          </div>
+          <div class="glass-card chart-card">
+            <div class="card-label">Skill Radar</div>
+            <canvas id="radarChart" height="260"></canvas>
+          </div>
+        </div>
+
+        <div id="notPlacedResult" style="display:none">
+          <div class="kpi-grid">
+            <div class="kpi-card red">
+              <div class="kpi-label">Placement Status</div>
+              <div class="kpi-value">Not Placed</div>
+            </div>
+            <div class="kpi-card amber">
+              <div class="kpi-label">Weak Areas</div>
+              <div class="kpi-value" id="kpiWeakCount">—</div>
+            </div>
+            <div class="kpi-card gray">
+              <div class="kpi-label">Action Required</div>
+              <div class="kpi-value">Upskill</div>
+            </div>
+          </div>
+          <div class="glass-card">
+            <div class="card-label">Weak Areas Identified</div>
+            <div id="weakTags" class="weak-tags"></div>
+          </div>
+          <button class="ai-btn" id="aiBtn" onclick="getAISuggestions()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Get AI Improvement Suggestions
+          </button>
+          <div id="aiResult" class="glass-card ai-result" style="display:none">
+            <div class="card-label">AI Recommendations</div>
+            <div id="aiText" class="ai-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <p>Configure your profile and execute inference to see predictions</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
