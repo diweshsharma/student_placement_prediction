@@ -2,6 +2,8 @@
 
 A cascaded ML pipeline that predicts campus placement outcomes and estimates salary packages for placed students, with AI-powered improvement suggestions for students at risk.
 
+> **Note:** Model `.pkl` files are not included in this repo due to size constraints. Train them locally by following the setup instructions below.
+
 ---
 
 ## Overview
@@ -37,7 +39,7 @@ Prediction     Suggestions
 | Classifier | Random Forest | Recall | 0.78 |
 | Regressor | Linear Regression | R² | 0.74 |
 
-Both models share a single `ColumnTransformer` preprocessor (StandardScaler + OneHotEncoder) saved as `preprocessor.pkl` and baked into each pipeline.
+Both models share a single `ColumnTransformer` preprocessor (StandardScaler + OneHotEncoder) baked into each pipeline.
 
 ---
 
@@ -59,16 +61,16 @@ Both models share a single `ColumnTransformer` preprocessor (StandardScaler + On
 ```
 student-placement-predictor/
 ├── data/
-│   └── dataset.csv
+│   └── dataset.csv                    # download from Kaggle (see setup)
 ├── notebooks/
 │   ├── eda.ipynb
 │   ├── train_classifier.ipynb
 │   └── train_regressor.ipynb
 ├── src/
-│   ├── preprocessing.py       # shared ColumnTransformer
-│   ├── predict.py             # cascade logic
-│   └── api.py                 # FastAPI endpoints
-├── models/
+│   ├── preprocessing.py               # shared ColumnTransformer
+│   ├── predict.py                     # cascade logic (CLI testing)
+│   └── api.py                         # FastAPI endpoints
+├── models/                            # generated after training (not in repo)
 │   ├── classifier.pkl
 │   ├── regressor.pkl
 │   └── preprocessor.pkl
@@ -79,6 +81,7 @@ student-placement-predictor/
 ├── streamlit_app.py
 ├── requirements.txt
 ├── .env.example
+├── .gitignore
 └── README.md
 ```
 
@@ -144,7 +147,7 @@ Accepts weak areas list, returns AI-generated improvement suggestions.
 **1. Clone the repo**
 ```bash
 git clone https://github.com/diweshsharma/student_placement_prediction
-cd student-placement-predictor
+cd student_placement_prediction
 ```
 
 **2. Create virtual environment**
@@ -164,18 +167,22 @@ cp .env.example .env
 # Add your GROQ_API_KEY in .env
 ```
 
-**5. Train models**
+**5. Add dataset**
 
-Run notebooks in order:
+Download the dataset and place it at `data/dataset.csv`.
+
+**6. Train models**
+
+Run notebooks in order — this generates the `.pkl` files in `models/`:
 - `notebooks/train_classifier.ipynb`
 - `notebooks/train_regressor.ipynb`
 
-**6. Start FastAPI**
+**7. Start FastAPI**
 ```bash
 uvicorn src.api:app --reload
 ```
 
-**7. Open frontend**
+**8. Open frontend**
 
 Open `frontend/index.html` in a browser with FastAPI running on port 8000.
 
@@ -190,7 +197,7 @@ streamlit run streamlit_app.py
 
 - Cascaded pipeline — regressor only runs when classifier predicts placement
 - Shared preprocessor across both models — no data leakage
-- Input validation via Pydantic with field constraints
+- Input validation via Pydantic with field-level constraints
 - CORS enabled for browser-based frontend
 - AI suggestions via Groq (Llama 3.1) — only triggered on not-placed result
 - Interactive radar chart for skill visualization
@@ -206,6 +213,6 @@ Synthetic dataset of 100,000 student records with 16 features covering academic 
 
 ## Author
 
-**Diwesh Kumar**  
-B.Tech CSE (AI/ML) — Dronacharya College of Engineering, Gurugram  
+**Diwesh Kumar**
+B.Tech CSE (AI/ML) — Dronacharya College of Engineering, Gurugram
 [GitHub](https://github.com/diweshsharma) · [LinkedIn](https://linkedin.com/in/diweshsharma)
