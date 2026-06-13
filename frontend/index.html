@@ -11,24 +11,41 @@
 </head>
 <body>
 
+<!-- Screen 1: Gateway Card -->
 <div id="screen1" class="screen active">
   <div class="mesh-bg"></div>
-  <div class="entry-content">
-    <div class="entry-badge">Cascaded ML Pipeline · v1.0</div>
-    <h1 class="hero-title">Predictive Intelligence<br><span class="hero-accent">Suite</span></h1>
-    <p class="hero-sub">Campus placement prediction powered by Random Forest & Linear Regression</p>
-    <div class="input-wrap">
-      <input type="text" id="nameInput" class="name-input" placeholder=" " autocomplete="off" />
-      <label class="float-label">Enter your name</label>
-      <div class="input-glow"></div>
+  <div class="gateway-wrap">
+    <div class="gateway-card">
+      <div class="avatar-ring">
+        <div class="avatar-inner">DK</div>
+      </div>
+      <h2 class="creator-name">Diwesh Kumar</h2>
+      <p class="creator-role">ML DEVELOPER</p>
+      <span class="creator-tag">CS Student &amp; ML Engineer</span>
+      <div class="social-row">
+        <a href="https://github.com/diweshsharma" target="_blank" class="social-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/diweshsharma" target="_blank" class="social-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+      <div class="divider-line"><span>ACCESS GATEWAY</span></div>
+      <p class="project-title">Student Placement Prediction System</p>
+      <div class="input-label-row">
+        <span>YOUR NAME</span>
+        <span class="input-hint">Required to proceed</span>
+      </div>
+      <div class="gateway-input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" id="nameInput" class="gateway-input" placeholder="Enter your name" autocomplete="off" />
+      </div>
+      <button id="launchBtn" class="verify-btn" disabled>Verify &amp; Enter Site</button>
     </div>
-    <button id="launchBtn" class="launch-btn" disabled>
-      <span>Launch Workspace</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
   </div>
 </div>
 
+<!-- Screen 2: Dashboard -->
 <div id="screen2" class="screen">
   <div id="toast" class="toast"></div>
 
@@ -37,10 +54,6 @@
       <div class="topbar-logo">
         <div class="logo-dot"></div>
         <span>PlacementIQ</span>
-      </div>
-      <div class="api-status">
-        <span class="pulse-dot"></span>
-        <span>API Connected</span>
       </div>
     </div>
     <div class="topbar-right">
@@ -164,7 +177,7 @@
 
       <button id="inferBtn" class="infer-btn" onclick="runInference()">
         <span id="inferBtnText">Execute Inference</span>
-        <svg id="inferBtnIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
       </button>
     </div>
 
@@ -184,18 +197,9 @@
       <div id="resultArea" style="display:none">
         <div id="placedResult" style="display:none">
           <div class="kpi-grid">
-            <div class="kpi-card emerald">
-              <div class="kpi-label">Placement Status</div>
-              <div class="kpi-value" id="kpiStatus">Placed</div>
-            </div>
-            <div class="kpi-card blue">
-              <div class="kpi-label">Predicted Salary</div>
-              <div class="kpi-value" id="kpiSalary">—</div>
-            </div>
-            <div class="kpi-card purple">
-              <div class="kpi-label">Confidence</div>
-              <div class="kpi-value">High</div>
-            </div>
+            <div class="kpi-card emerald"><div class="kpi-label">Status</div><div class="kpi-value">Placed</div></div>
+            <div class="kpi-card blue"><div class="kpi-label">Salary</div><div class="kpi-value" id="kpiSalary">—</div></div>
+            <div class="kpi-card purple"><div class="kpi-label">Confidence</div><div class="kpi-value">High</div></div>
           </div>
           <div class="glass-card chart-card">
             <div class="card-label">Skill Radar</div>
@@ -205,18 +209,9 @@
 
         <div id="notPlacedResult" style="display:none">
           <div class="kpi-grid">
-            <div class="kpi-card red">
-              <div class="kpi-label">Placement Status</div>
-              <div class="kpi-value">Not Placed</div>
-            </div>
-            <div class="kpi-card amber">
-              <div class="kpi-label">Weak Areas</div>
-              <div class="kpi-value" id="kpiWeakCount">—</div>
-            </div>
-            <div class="kpi-card gray">
-              <div class="kpi-label">Action Required</div>
-              <div class="kpi-value">Upskill</div>
-            </div>
+            <div class="kpi-card red"><div class="kpi-label">Status</div><div class="kpi-value">Not Placed</div></div>
+            <div class="kpi-card amber"><div class="kpi-label">Weak Areas</div><div class="kpi-value" id="kpiWeakCount">—</div></div>
+            <div class="kpi-card gray"><div class="kpi-label">Action</div><div class="kpi-value">Upskill</div></div>
           </div>
           <div class="glass-card">
             <div class="card-label">Weak Areas Identified</div>

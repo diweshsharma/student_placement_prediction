@@ -102,12 +102,12 @@ function buildRadarChart(payload) {
           payload.communication_skills,
           payload.aptitude_score / 10
         ],
-        backgroundColor: 'rgba(91,82,214,0.15)',
-        borderColor: 'rgba(91,82,214,0.8)',
-        pointBackgroundColor: '#7B72F0',
+        backgroundColor: 'rgba(13,156,90,0.12)',
+        borderColor: 'rgba(13,156,90,0.8)',
+        pointBackgroundColor: '#0D9C5A',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: '#7B72F0',
+        pointHoverBorderColor: '#0D9C5A',
         borderWidth: 2
       }]
     },
@@ -128,7 +128,7 @@ function buildRadarChart(payload) {
           backgroundColor: 'rgba(15,15,35,0.95)',
           borderColor: 'rgba(123,114,240,0.3)',
           borderWidth: 1,
-          titleColor: '#9B8FF0',
+          titleColor: '#0D9C5A',
           bodyColor: '#C0C0D8',
           padding: 10
         }
