@@ -108,3 +108,11 @@ def get_suggestions(data: WeakAreas):
     )
     
     return {"suggestions": response.choices[0].message.content}
+
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+@app.get("/")
+def home():
+    return FileResponse("frontend/index.html")
