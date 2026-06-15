@@ -188,19 +188,46 @@ async function getAISuggestions() {
     const res = await fetch("/suggestions", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ weak_areas: window._lastWeakAreas || [] })
+      body: JSON.stringify({
+        weak_areas: window._lastWeakAreas || []
+      })
     });
 
     if (!res.ok) throw new Error('Suggestions API error');
+
     const data = await res.json();
 
-    document.getElementById('aiText').textContent = data.suggestions;
+    const aiText = document.getElementById('aiText');
+
+    let html = '';
+
+    for (const [area, tips] of Object.entries(data.suggestions)) {
+      html += `
+        <div class="suggestion-card">
+          <h3>${area}</h3>
+          <ul>
+            ${tips.map(tip => `<li>${tip}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    aiText.innerHTML = html;
     document.getElementById('aiResult').style.display = 'block';
 
   } catch (err) {
-    showToast('AI suggestions unavailable. Check /suggestions endpoint.');
+    console.error(err);
+    showToast('AI suggestions unavailable.');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Get AI Improvement Suggestions`;
+    btn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87
+                 1.18 6.88L12 17.77l-6.18 3.25L7 14.14
+                 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      Get AI Improvement Suggestions
+    `;
   }
 }

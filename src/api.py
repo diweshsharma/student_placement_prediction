@@ -91,21 +91,42 @@ def get_suggestions(data: WeakAreas):
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{
-            "role": "user",
-            "content": f"""
-            A student is not getting placed in campus recruitment.
-            Their weak areas are: {', '.join(data.weak_areas)}
-            
-            Give specific, actionable suggestions to improve each weak area.
-            Keep it concise - 2 to 3 lines per weak area.
-            Format as bullet points.
-            """
-        }]
-    )
-    
-    return {"suggestions": response.choices[0].message.content}
+    model="llama-3.1-8b-instant",
+    messages=[{
+        "role": "user",
+        "content": f"""
+        A student is not getting placed.
+
+        Weak areas: {', '.join(data.weak_areas)}
+
+        Return ONLY valid JSON.
+
+        Example:
+
+        {{
+            "CGPA": [
+                "Improve academic fundamentals",
+                "Maintain consistent study schedule"
+            ],
+            "Coding Skills": [
+                "Solve 2 coding problems daily",
+                "Practice contest programming"
+            ]
+        }}
+
+        Rules:
+        - Return only JSON.
+        - No markdown.
+        - No explanation text.
+        - Each weak area should have exactly 3 suggestions.
+        """
+    }]
+)
+
+    import json
+    suggestions = json.loads(response.choices[0].message.content)
+
+    return {"suggestions": suggestions}
 
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
