@@ -40,6 +40,10 @@ class predict(BaseModel):
     open_source_contributions : int
     extracurriculars : int = Field(...,ge =0, le=3)
     
+
+@app.get("/")
+def root():
+    return {"message": "Student Placement Prediction API is running"}
 @app.post('/predict')
 def prediction(stud:predict):
     student =stud.model_dump()
