@@ -142,7 +142,7 @@ async function runInference() {
   setLoading(true);
 
   try {
-    const res = await fetch(`${API_URL}/predict`, {
+    const res = await fetch("/predict", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -185,7 +185,7 @@ async function getAISuggestions() {
   btn.textContent = 'Generating suggestions...';
 
   try {
-    const res = await fetch(`${API_URL}/suggestions`, {
+    const res = await fetch("/suggestions", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ weak_areas: window._lastWeakAreas || [] })
