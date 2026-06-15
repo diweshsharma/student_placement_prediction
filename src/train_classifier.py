@@ -36,7 +36,7 @@ X_train,X_test,y_train,y_test= train_test_split(X,y,test_size = 0.2, random_stat
 scale = 31525 / 68475
 candidates = {
     'Logistic Regression' : LogisticRegression(C = 1.0, class_weight ='balanced', max_iter = 1000, random_state =42 ),
-    'Random ForestClassifier' : RandomForestClassifier(n_estimators = 100, class_weight = 'balanced' , random_state = 42, n_jobs = -1),
+    'Random ForestClassifier' : RandomForestClassifier(n_estimators = 100,max_depth = 10, min_samples_leaf =5, class_weight = 'balanced' , random_state = 42, n_jobs = -1),
     'XGboost': XGBClassifier(n_estimators = 100, learning_rate = 0.1,max_depth = 6, random_state = 42, n_jobs = -1, scale_pos_weight=scale)
 }
 
