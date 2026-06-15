@@ -5,4 +5,4 @@ __pycache__/
 tempCodeRunnerFile.py
 
 .env
-models/*.pkl
+# models/*.pkl
